@@ -35,7 +35,6 @@ RamEnable:
     cmp r0,#0x0A
     
     @ --- AUTO SAVE HOOK ANFANG ---
-    @ Wenn es nicht 0x0A ist (SRAM wird deaktiviert), rette Register und springe in C
     beq skip_auto_save
     
     stmfd sp!, {r0-r12, lr}      @ Register retten
@@ -43,6 +42,7 @@ RamEnable:
     ldmfd sp!, {r0-r12, lr}      @ Register wiederherstellen
     
 skip_auto_save:
+    cmp r0, #0x0A                @ <--- DER FIX: Flags für die nächsten Befehle wiederherstellen!
     @ --- AUTO SAVE HOOK ENDE ---
 
     adrnel r1,empty_W
