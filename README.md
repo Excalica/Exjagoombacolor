@@ -1,3 +1,9 @@
+Ex's Jagoomba Fork
+
+Added SRAM moddification for direkt saving for Games like Pokémon to avoid missing saves when not enter the Emulatormenue with L+R
+
+_____________________________________________________________________________________________________________________________________
+
 Jaga's Goomba Color fork
 
 A fork of Goomba Color with the goal of fixing bugs and incompatibilities in the original.  Based on the 2019-05-04 source.

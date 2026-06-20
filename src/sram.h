@@ -67,5 +67,5 @@ static __inline u32 get_sram_owner()
 {
 	return sram_owner;
 }
-
+void auto_save_sram_hook(void);
 #endif

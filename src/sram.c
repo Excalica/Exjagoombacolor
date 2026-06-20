@@ -1417,10 +1417,10 @@ void writeconfig()
 	compressed_save = sram_copy + 0xE000;
 	current_save_file = (stateheader*)compressed_save;
 	
-	i=findstate(0,CONFIGSAVE,(stateheader**)&cfg);
+i=findstate(0,CONFIGSAVE,(stateheader**)&cfg);
 	if(i<0) {//make new config
 		memcpy(compressed_save,&configtemplate,sizeof(configdata));
-		cfg=current_save_file;
+		cfg=(configdata*)current_save_file;
 	}
 //	cfg->bordercolor=bcolor;					//store current border type
 	cfg->palettebank=palettebank;				//store current DMG palette
@@ -1737,10 +1737,18 @@ int loadstate2(int romNumber, stateheader *sh)
 	
 	return sh->size;
 }
-
-
-
-
+// --- NEUER AUTO-SAVE HOOK ---
+// Diese Funktion wird aus dem Assembly-Code aufgerufen, 
+// sobald ein Spiel das SRAM schließt (SRAM Disable).
+void auto_save_sram_hook(void)
+{
+    // Wir prüfen zur Sicherheit, ob eine Flashcart genutzt wird
+    if (using_flashcart())
+    {
+        // Ruft die interne Speicherroutine von Jagoomba auf (1 = save from Game)
+        backup_gb_sram(1);
+    }
+}
 #endif
 
 

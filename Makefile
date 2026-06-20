@@ -45,7 +45,7 @@ include $(DEVKITARM)/gba_rules
 # SOURCES is a list of directories containing source code
 # INCLUDES is a list of directories containing extra header files
 #---------------------------------------------------------------------------------
-TARGET		:=	jagoombacolor
+TARGET		:=	Exjagoombacolor_1.0
 BUILD		:=	build
 SOURCES		:=	src
 INCLUDES	:=

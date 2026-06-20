@@ -1,48 +1,62 @@
- .section .iwram.2, "ax", %progbits
+.section .iwram.2, "ax", %progbits
 
-@	#include "equates.h"
-@	#include "memory.h"
-@	#include "lcd.h"
-@	#include "cart.h"
-@	#include "io.h"
+@    #include "equates.h"
+@    #include "memory.h"
+@    #include "lcd.h"
+@    #include "cart.h"
+@    #include "io.h"
 
  .if RUMBLE
-	@IMPORT DoRumble
+    @IMPORT DoRumble
  .endif
-	global_func mbc0init
-	global_func mbc1init
-	global_func mbc2init
-	global_func mbc3init
-	global_func mbc4init
-	global_func mbc5init
-	global_func mbc6init
-	global_func mbc7init
-	global_func mmm01init
-	global_func huc1init
-	global_func huc3init
-	global_func RamSelect
+    .global auto_save_sram_hook
+    global_func mbc0init
+    global_func mbc1init
+    global_func mbc2init
+    global_func mbc3init
+    global_func mbc4init
+    global_func mbc5init
+    global_func mbc6init
+    global_func mbc7init
+    global_func mmm01init
+    global_func huc1init
+    global_func huc3init
+    global_func RamSelect
 @----------------------------------------------------------------------------
 RamSelect:
 @----------------------------------------------------------------------------
-	ldrb_ r0,mapperdata+2	@ram enable
+    ldrb_ r0,mapperdata+2    @ram enable
+
 @----------------------------------------------------------------------------
 RamEnable:
 @----------------------------------------------------------------------------
-	strb_ r0,mapperdata+2
-	and r0,r0,#0x0F
-	cmp r0,#0x0A
-	adrnel r1,empty_W
-	ldreq_ r1,sramwptr
-	str_ r1,writemem_tbl+40
-	str_ r1,writemem_tbl+44
-	adrnel r1,empty_R
-	adreql r1,mem_RA0
-	str_ r1,readmem_tbl_-40
-	str_ r1,readmem_tbl_-44
-	ldrb_ r0,mapperdata+4		@rambank
-	b mapAB_
+    strb_ r0,mapperdata+2
+    and r0,r0,#0x0F
+    cmp r0,#0x0A
+    
+    @ --- AUTO SAVE HOOK ANFANG ---
+    @ Wenn es nicht 0x0A ist (SRAM wird deaktiviert), rette Register und springe in C
+    beq skip_auto_save
+    
+    stmfd sp!, {r0-r12, lr}      @ Register retten
+    bl_long auto_save_sram_hook  @ C-Funktion in sram.c aufrufen
+    ldmfd sp!, {r0-r12, lr}      @ Register wiederherstellen
+    
+skip_auto_save:
+    @ --- AUTO SAVE HOOK ENDE ---
 
-	.pushsection .text
+    adrnel r1,empty_W
+    ldreq_ r1,sramwptr
+    str_ r1,writemem_tbl+40
+    str_ r1,writemem_tbl+44
+    adrnel r1,empty_R
+    adreql r1,mem_RA0
+    str_ r1,readmem_tbl_-40
+    str_ r1,readmem_tbl_-44
+    ldrb_ r0,mapperdata+4        @rambank
+    b mapAB_
+
+    .pushsection .text
 @----------------------------------------------------------------------------
 mbc0init:
 @----------------------------------------------------------------------------
