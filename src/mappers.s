@@ -38,11 +38,17 @@ RamEnable:
     beq skip_auto_save
     
     stmfd sp!, {r0-r12, lr}      @ Register retten
-    bl_long auto_save_sram_hook  @ C-Funktion in sram.c aufrufen
+    
+    @ --- Sichern ARM-zu-Thumb Sprung (Interworking) ---
+    ldr r3, =auto_save_sram_hook @ Adresse der C-Funktion in Register 3 laden
+    mov lr, pc                   @ Die korrekte Rücksprungadresse für den GBA setzen
+    bx r3                        @ 'bx' wechselt sicher in den Thumb-Modus zur C-Funktion!
+    @ --------------------------------------------------
+    
     ldmfd sp!, {r0-r12, lr}      @ Register wiederherstellen
     
 skip_auto_save:
-    cmp r0, #0x0A                @ <--- DER FIX: Flags für die nächsten Befehle wiederherstellen!
+    cmp r0, #0x0A                @ Flags für die nächsten Befehle wiederherstellen!
     @ --- AUTO SAVE HOOK ENDE ---
 
     adrnel r1,empty_W
