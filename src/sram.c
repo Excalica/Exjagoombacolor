@@ -1738,17 +1738,18 @@ int loadstate2(int romNumber, stateheader *sh)
 	return sh->size;
 }
 // --- NEUER AUTO-SAVE HOOK ---
-// Diese Funktion wird aus dem Assembly-Code aufgerufen, 
-// sobald ein Spiel das SRAM schließt (SRAM Disable).
+int sram_dirty_flag = 0; // Merkt sich, ob etwas gespeichert wurde
+
 void auto_save_sram_hook(void)
 {
-    // Wir prüfen zur Sicherheit, ob eine Flashcart genutzt wird
-    if (using_flashcart())
+    // Nur auf die SD-Karte schreiben, wenn sich das SRAM wirklich geändert hat!
+    if (sram_dirty_flag && using_flashcart())
     {
-        // Ruft die interne Speicherroutine von Jagoomba auf (1 = save from Game)
         backup_gb_sram(1);
+        sram_dirty_flag = 0; // Flag wieder zurücksetzen, um Endlosschleifen zu verhindern
     }
 }
+// ----------------------------
 #endif
 
 

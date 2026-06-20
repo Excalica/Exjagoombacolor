@@ -29,6 +29,8 @@
 	global_func memcpy_unaligned_src
 	
 	.global sram_W2_modify
+	.global sram_dirty_flag
+
 @----------------------------------------------------------------------------
 empty_R:		@read bad address (error)
 @----------------------------------------------------------------------------
@@ -117,6 +119,15 @@ sram_W:	@sram write ($A000-$BFFF)
 @----------------------------------------------------------------------------
 	ldr_ r1,memmap_tbl+40
 	strb r0,[r1,addy]
+	
+	@ --- DIRTY FLAG SETZEN ---
+	stmfd sp!, {r0, r1}           @ Kurz die Register sichern
+	ldr r1, =sram_dirty_flag      @ Unser C-Flag laden
+	mov r0, #1                    @ Wert 1 vorbereiten
+	str r0, [r1]                  @ Flag auf 1 setzen (Es wurde geschrieben!)
+	ldmfd sp!, {r0, r1}           @ Register wiederherstellen
+	@ -------------------------
+	
 	mov pc,lr
 @----------------------------------------------------------------------------
 wram_W:	@wram write ($C000-$CFFF)
