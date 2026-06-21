@@ -160,12 +160,26 @@ else
 DEPENDS	:=	$(OFILES:.o=.d)
 
 %.o	:	%.lz77
-	@echo $(notdir $<)
-	@$(bin2o)
+	@echo "Baue $@ ..."
+	@cp "$<" temp_font.lz77
+	@echo ".section .rodata" > temp_$*.s
+	@echo ".global font_lz77" >> temp_$*.s
+	@echo ".align 2" >> temp_$*.s
+	@echo "font_lz77:" >> temp_$*.s
+	@echo ".incbin \"temp_font.lz77\"" >> temp_$*.s
+	@$(CC) $(ASFLAGS) -c temp_$*.s -o $@
+	@rm temp_$*.s temp_font.lz77
 
 %.o	:	%.bin
-	@echo $(notdir $<)
-	@$(bin2o)
+	@echo "Baue $@ ..."
+	@cp "$<" temp_fontpal.bin
+	@echo ".section .rodata" > temp_$*.s
+	@echo ".global fontpal_bin" >> temp_$*.s
+	@echo ".align 2" >> temp_$*.s
+	@echo "fontpal_bin:" >> temp_$*.s
+	@echo ".incbin \"temp_fontpal.bin\"" >> temp_$*.s
+	@$(CC) $(ASFLAGS) -c temp_$*.s -o $@
+	@rm temp_$*.s temp_fontpal.bin
 
 %.o	:	%.gba
 	@echo $(notdir $<)
@@ -186,10 +200,8 @@ $(OUTPUT).elf	:	$(OFILES)	gba_crt0_my.o
 %.gba: %.elf
 	@$(OBJCOPY) -O binary $< $@
 	@echo CUSTOM built ... $(notdir $@)
-	@echo gbafix $@ -t GOOMBA COLOR -c GMBC
-	@gbafix $@ "-tGOOMBA COLOR" "-cGMBC"
-
-
+	@echo gbafix $@ -t EXJAGOOMBA -c RTCX
+	@gbafix $@ "-tEXJAGOOMBA" "-cRTCX"
 
 #---------------------------------------------------------------------------------
 endif

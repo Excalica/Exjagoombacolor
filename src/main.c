@@ -223,19 +223,18 @@ void C_entry()
 
 
 
-	#if LITTLESOUNDDJ
-	enable_ram();
-	#endif
-
-	#if RTCSUPPORT
-	*timeregs=1;
-    #ifndef EZFLASH_OMEGA_BUILD
-	if(*timeregs & 1)
-	#endif
-        rtc=1;
+#if LITTLESOUNDDJ
+    enable_ram();
     #endif
-	gbaversion=CheckGBAVersion();
-	vblankfptr=&vbldummy;
+
+    #if RTCSUPPORT
+    *timeregs=1;
+// RTC immer an
+    rtc=1;
+    #endif
+    
+    gbaversion=CheckGBAVersion();
+    vblankfptr=&vbldummy;
 	
 	GFX_init_irq();
 //	vcountfptr=&vbldummy;

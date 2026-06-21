@@ -124,7 +124,7 @@ sram_W:	@sram write ($A000-$BFFF)
 	stmfd sp!, {r0, r1}           @ Kurz die Register sichern
 	ldr r1, =sram_dirty_flag      @ Unser C-Flag laden
 	mov r0, #1                    @ Wert 1 vorbereiten
-	str r0, [r1]                  @ Flag auf 1 setzen (Es wurde geschrieben!)
+	str r0, [r1]                  @ Flag auf 1 setzen 
 	ldmfd sp!, {r0, r1}           @ Register wiederherstellen
 	@ -------------------------
 	
