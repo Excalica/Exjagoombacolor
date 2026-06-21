@@ -185,7 +185,7 @@ mbc3bank:
 	strb_ r0,mapperdata+4
 	tst r0,#8
 	beq RamSelect
-	ldr r1,=empty_W
+	ldr r1,=rtc_W   @ empty_W to rtc_W (Fix - RTC WRITE HACK FÜR POKEMON CRYSTAL)
 	str_ r1,writemem_tbl+40
 	str_ r1,writemem_tbl+44
 	ldr r1,=empty_R
@@ -223,11 +223,27 @@ clk_dayL:
 clk_dayH:
 	mov r0,#0
 calctime:
-	and r1,r0,#0xf
-	mov r0,r0,lsr#4
-	add r0,r0,r0,lsl#2
-	add r0,r1,r0,lsl#1 
-	mov pc,lr
+    and r1,r0,#0xf
+    mov r0,r0,lsr#4
+    add r0,r0,r0,lsl#2
+    add r0,r1,r0,lsl#1 
+    mov pc,lr
+
+@------------------------------
+@ NEUER RTC WRITE HACK FÜR POKEMON CRYSTAL
+@------------------------------
+rtc_W:
+    ldrb_ r1,mapperdata+4
+    cmp r1,#0x08
+    streqb_ r0,mapperdata+30
+    cmp r1,#0x09
+    streqb_ r0,mapperdata+29
+    cmp r1,#0x0A
+    streqb_ r0,mapperdata+28
+    cmp r1,#0x0B
+    streqb_ r0,mapperdata+26
+    mov pc,lr
+@------------------------------
 @------------------------------
 	
 
