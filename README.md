@@ -13,7 +13,10 @@ Set the RTC always to on to fix an issue with everdrive to detect rtc
 New working games on everdrive:
 "Pokemon Prism"
 
+Known Bugs: RTC in Prism jumps in time forward.
+
     Next: 
+    -  Bugfixing Timejump RTC 
     -  Working on Pokemon Crystral fix
     -  Switchable Screensize for GBC/GB Games
     - 
