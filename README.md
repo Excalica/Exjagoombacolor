@@ -1,6 +1,23 @@
-Ex's Jagoomba Fork
+Ex's Jagoomba Fork 
 
 Added SRAM moddification for direkt saving for Games like Pokémon to avoid missing saves when not enter the Emulatormenue with L+R
+
+Fixed issue with compailing the gba file (rename fonts)
+-- To build:
+- Install the latest DevkitPro GBA tools
+- Navigate Msys2 to this directory
+- make
+
+Set the RTC always to on to fix an issue with everdrive to detect rtc
+
+New working games on everdrive:
+"Pokemon Prism"
+
+    Next: 
+    -  Working on Pokemon Crystral fix
+    -  Switchable Screensize for GBC/GB Games
+    - 
+
 
 _____________________________________________________________________________________________________________________________________
 
