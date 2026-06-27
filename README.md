@@ -1,6 +1,9 @@
 Ex's Jagoomba Fork 
 
 Added SRAM moddification for direkt saving for Games like Pokémon to avoid missing saves when not enter the Emulatormenue with L+R
+Added additional Fixes for Pokemon Crystal to fix startup. (working on SGB Enhanced version fix)
+Fixed RTC on Everdrive, mow it works on all games i tested fine.
+
 
 Fixed issue with compailing the gba file (rename fonts)
 -- To build:
@@ -13,13 +16,12 @@ Set the RTC always to on to fix an issue with everdrive to detect rtc
 New working games on everdrive:
 "Pokemon Prism"
 
-Known Bugs: RTC in Prism jumps in time forward.
+Known Bugs: RTC in Pokemon Prism jumps in time forward.
 
     Next: 
     -  Bugfixing Timejump RTC 
-    -  Working on Pokemon Crystral fix
     -  Switchable Screensize for GBC/GB Games
-    - 
+    -  SGB Color fixes
 
 
 _____________________________________________________________________________________________________________________________________
