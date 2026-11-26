@@ -1,3 +1,25 @@
+# ExJagoomba – eingestellt (discontinued)
+
+**Dieses Projekt wird nicht mehr weiterentwickelt.**
+
+Die Arbeit an ExJagoomba geht im Nachfolgeprojekt **Satoru** weiter:
+https://github.com/Excalica/Satoru
+
+Satoru ist ein Game-Boy- und Game-Boy-Color-Emulator für den Game Boy Advance und führt die Ideen von
+ExJagoomba fort, unter anderem:
+- Spielstände, die ohne Öffnen des Emulatormenüs direkt gespeichert werden (z. B. Pokémon)
+- vollständige MBC3-Uhr für Pokémon Gold, Silber, Kristall und Hacks wie Prism
+- eigener Speichermodus für das japanische Pokémon Kristall
+- SGB-Farbbereiche, GBC-Farben wie auf dem GBC-Display und ein Vollbildmodus
+- eigene Builds für EverDrive GBA und EZ-Flash Omega
+
+**Das erste Release von Satoru folgt im Dezember 2026.**
+
+Die bisherigen Releases von ExJagoomba bleiben hier verfügbar, erhalten aber keine Updates mehr.
+Fehlerberichte und Wünsche bitte an Satoru richten.
+
+_____________________________________________________________________________________________________________________________________
+
 Ex's Jagoomba Fork 
 
 Added SRAM moddification for direkt saving for Games like Pokémon to avoid missing saves when not enter the Emulatormenue with L+R
